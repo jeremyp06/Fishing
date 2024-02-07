@@ -6,6 +6,8 @@ public class FishReel : MonoBehaviour
     private List<GameObject> objectsInside = new List<GameObject>();
     private IFishingStrategy strategy;
 
+    public reelSpeed = 1f;
+
     public void SetChooseItemStrategy(IFishingStrategy s)
     {
         strategy = s;
@@ -40,7 +42,12 @@ public class FishReel : MonoBehaviour
 
     private void ReelFish()
     {
-        
+        GameObject target = ChooseItem();
+        if (target != null){
+            Collider2D hitboxCollider = GetComponent<Collider2D>();
+            Vector3 centerOfHitbox = hitboxCollider.bounds.center;
+            chosenFish.GetComponent<Fish>().MoveTowardsLocation(centerOfHitbox, reelSpeed);
+        }
     } 
 }
 

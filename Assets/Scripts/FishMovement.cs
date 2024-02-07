@@ -6,6 +6,7 @@ public class Fish : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
     private float adjustedMoveSpeed;
+    private bool isCaught = false;
 
     void Start()
     {
@@ -25,6 +26,27 @@ public class Fish : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(new Vector3(0f, 1f, 0f) * adjustedMoveSpeed * Time.deltaTime);
+        if (!isCaught)
+        {
+            transform.Translate(new Vector3(0f, 1f, 0f) * adjustedMoveSpeed * Time.deltaTime);
+        }
+    }
+
+    public void MoveTowardsLocation(Vector3 targetPosition, float moveSpeed)
+    {
+        isMoving = true;
+        StartCoroutine(MoveTowardsCoroutine(targetPosition, moveSpeed));
+    }
+
+    private IEnumerator MoveTowardsCoroutine(Vector3 targetPosition, float moveSpeed)
+    {
+        while (Vector3.Distance(transform.position, targetPosition) > 0.1f)
+        {
+            Vector3 direction = (targetPosition - transform.position).normalized;
+            transform.position += direction * moveSpeed * Time.deltaTime;
+            yield return null;
+        }
+        transform.position = targetPosition;
+        Destroy(gameObject);
     }
 }
