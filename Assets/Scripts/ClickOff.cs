@@ -1,11 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class ClickOff : MonoBehaviour
 {
     // Singleton instance
     private static ClickOff _instance;
     public static ClickOff Instance { get { return _instance; } }
+
+    public GameObject T;
+    private Targeting targeting;
 
     public List<GameObject> boxList;
 
@@ -23,17 +27,16 @@ public class ClickOff : MonoBehaviour
         boxList = new List<GameObject>();
     }
 
+    void Start()
+    {
+        targeting = T.GetComponent<Targeting>();
+    }
+
     public void AddBox(GameObject gameObject)
     {
         if (gameObject != null)
         {
             boxList.Add(gameObject);
-        }
-
-        Debug.Log("Contents of the list:");
-        foreach (GameObject x in boxList)
-        {
-            Debug.Log(x.transform.position);
         }
     }
 
@@ -50,6 +53,8 @@ public class ClickOff : MonoBehaviour
                 spriteRenderer.color = color;
             }
         }
+
+        targeting.HideButtons();
     }
 
     bool CheckIntersection(Collider2D collider)
@@ -59,16 +64,24 @@ public class ClickOff : MonoBehaviour
     }
 
     private void OnMouseDown(){
+
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+
         foreach (GameObject obj in boxList)
         {
             if (CheckIntersection(obj.GetComponent<Collider2D>())){
                 obj.GetComponent<RodUpgrader>().Highlight();
-                Debug.Log("found");
+
+                targeting.rod = obj.GetComponent<RodUpgrader>().getRod();
+                targeting.ShowButtons();
+
                 return;
             }
         } 
 
-        Debug.Log("not found");
         ClickOffAllBoxes();
     }
 }

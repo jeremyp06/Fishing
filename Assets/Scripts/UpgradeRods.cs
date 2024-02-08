@@ -12,6 +12,11 @@ public class RodUpgrader : MonoBehaviour
         rod = r;
     }
 
+    public GameObject getRod()
+    {
+        return rod;
+    }
+
     public void Start()
     {
         clickOff = ClickOff.Instance;

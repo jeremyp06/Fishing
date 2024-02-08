@@ -39,8 +39,6 @@ public class RodController : MonoBehaviour
             color.a = 0.2f;
             spriteRenderer.color = color;
 
-            Debug.Log("oijefeooijfe");
-
             clickOff.GetComponent<ClickOff>().AddBox(clickableArea);
         }
     }
@@ -105,6 +103,8 @@ public class RodController : MonoBehaviour
 
                 currentFishingRod = null;
                 clickableArea = null;
+
+                clickOff.ClickOffAllBoxes();
             } 
         }
     }

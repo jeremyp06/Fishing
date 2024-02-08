@@ -17,6 +17,11 @@ public class FishReel : MonoBehaviour
         strategy = s;
     }
 
+    public IFishingStrategy GetStrategy()
+    {
+        return strategy;
+    }
+
     void OnTriggerEnter2D(Collider2D other)
     {
         Fish fish = other.gameObject.GetComponent<Fish>(); 

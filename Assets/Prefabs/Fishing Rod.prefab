@@ -101,7 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fishingRodPrefab: {fileID: 6604533017063480144}
   clickableAreaPrefab: {fileID: 4217429695316001089, guid: 72ad275843a77bd4aad6d7c1613bec46, type: 3}
-  clickOff: {fileID: 8022157663251759597, guid: f156e615f44809149924ea93dcb4b1f3, type: 3}
+  clickOff: {fileID: 3157646465231631973, guid: f156e615f44809149924ea93dcb4b1f3, type: 3}
   boxes:
     serializedVersion: 2
     m_Bits: 128
