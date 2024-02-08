@@ -1,56 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class FishReel : MonoBehaviour
-{
-    private List<GameObject> objectsInside = new List<GameObject>();
-    private IFishingStrategy strategy;
-
-    public reelSpeed = 1f;
-
-    public void SetChooseItemStrategy(IFishingStrategy s)
-    {
-        strategy = s;
-    }
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        Fish fish = other.gameObject.GetComponent<Fish>(); 
-        if (fish != null && !objectsInside.Contains(fish.gameObject))
-        {
-            objectsInside.Add(fish.gameObject);
-        }
-    }
-
-    void OnTriggerExit2D(Collider2D other)
-    {
-        Fish fish = other.gameObject.GetComponent<Fish>(); 
-        if (fish != null && objectsInside.Contains(fish.gameObject))
-        {
-            objectsInside.Remove(fish.gameObject);
-        }
-    }
-
-    private GameObject ChooseItem()
-    {
-        if (strategy != null)
-        {
-            return strategy.ChooseItem(objectsInside);
-        }
-        return null;
-    }
-
-    private void ReelFish()
-    {
-        GameObject target = ChooseItem();
-        if (target != null){
-            Collider2D hitboxCollider = GetComponent<Collider2D>();
-            Vector3 centerOfHitbox = hitboxCollider.bounds.center;
-            chosenFish.GetComponent<Fish>().MoveTowardsLocation(centerOfHitbox, reelSpeed);
-        }
-    } 
-}
-
 public interface IFishingStrategy
 {
     GameObject ChooseItem(List<GameObject> objectsInside);

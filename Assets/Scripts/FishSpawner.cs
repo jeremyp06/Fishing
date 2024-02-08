@@ -18,7 +18,14 @@ public class FishSpawner : MonoBehaviour
     {
         if (spawnCount < numberOfCopies)
         {
-            Instantiate(prefabToSpawn, spawnLocation.position, Quaternion.identity);
+            GameObject newFish = Instantiate(prefabToSpawn, spawnLocation.position, Quaternion.identity);
+            float randomWeight = Random.Range(0f, 3f);
+
+            Fish fishComponent = newFish.GetComponent<Fish>();
+            if (fishComponent != null)
+            {
+                fishComponent.setWeight(randomWeight);
+            }
             spawnCount++;
         }
         else
