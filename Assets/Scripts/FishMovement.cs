@@ -10,6 +10,9 @@ public class Fish : MonoBehaviour
     private float adjustedMoveSpeed;
     private bool isCaught = false;
 
+    private CashSystem cashSystem;
+
+
     void Start()
     {
         transform.Rotate(0f, 0f, 90f);
@@ -19,6 +22,8 @@ public class Fish : MonoBehaviour
         Color color = new Color(1f, 1f - 0.2f * weight, 1f - 0.2f * weight);
         spriteRenderer.color = color;
         adjustedMoveSpeed = moveSpeed + weight * 0.2f;
+
+        cashSystem = CashSystem.instance;
     }
 
     public void setWeight(float newWeight)
@@ -42,5 +47,11 @@ public class Fish : MonoBehaviour
         {
             transform.Translate(new Vector3(0f, 1f, 0f) * adjustedMoveSpeed * Time.deltaTime);
         } 
+
+        if (transform.position.x < -12)
+        {
+            cashSystem.SubtractCash(Mathf.FloorToInt(10 * weight));
+            Destroy(gameObject);
+        }
     }
 }

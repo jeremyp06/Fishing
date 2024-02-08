@@ -12,6 +12,8 @@ public class FishReel : MonoBehaviour
     private bool isReelingCooldown = false; 
     private bool isFishing = false; 
 
+    private CashSystem cashSystem;
+
     public void SetChooseItemStrategy(IFishingStrategy s)
     {
         strategy = s;
@@ -118,6 +120,9 @@ public class FishReel : MonoBehaviour
         }
 
         target.transform.position = targetPosition;
+
+        cashSystem.AddCash(Mathf.FloorToInt(40 * target.GetComponent<Fish>().weight + 10));
+
         StartReelCooldown();
         Destroy(target);
     }
@@ -125,6 +130,7 @@ public class FishReel : MonoBehaviour
     void Start()
     {
         SetChooseItemStrategy(new First());
+        cashSystem = CashSystem.instance;
     }
 
     void Update()
