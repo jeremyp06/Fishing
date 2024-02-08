@@ -8,7 +8,7 @@ public class Fish : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
     private float adjustedMoveSpeed;
-    private bool isCaught = false;
+    public bool isCaught = false; //change back
 
     void Start()
     {
@@ -29,7 +29,7 @@ public class Fish : MonoBehaviour
     public void setIsCaught(bool c)
     {
         isCaught = c;
-        Debug.Log("Im caught so i should stop moving fr");
+        Debug.Log("Fish is frozen");
     }
 
     void Update()
@@ -37,6 +37,6 @@ public class Fish : MonoBehaviour
         if (!isCaught)
         {
             transform.Translate(new Vector3(0f, 1f, 0f) * adjustedMoveSpeed * Time.deltaTime);
-        }
+        } 
     }
 }

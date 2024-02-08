@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fishingRodPrefab: {fileID: 6604533017063480144}
+  clickableAreaPrefab: {fileID: 4217429695316001089, guid: 72ad275843a77bd4aad6d7c1613bec46, type: 3}
 --- !u!61 &3290020689572474136
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -157,3 +158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcb8eec073a4d7a4b9c3689074bcdc1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  reelSpeed: 1
+  reelCooldown: 3
+  isReelingCooldown: 0
+  isFishing: 0

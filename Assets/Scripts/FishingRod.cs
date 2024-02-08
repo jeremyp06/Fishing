@@ -9,8 +9,8 @@ public class FishReel : MonoBehaviour
     public float reelSpeed = 1f;
     public float reelCooldown = 3.0f;
     private float reelCooldownTimer = 0.0f;
-    private bool isReelingCooldown = false;
-    private bool isFishing = false;
+    public bool isReelingCooldown = false; //change back
+    public bool isFishing = false; //change back
 
     public void SetChooseItemStrategy(IFishingStrategy s)
     {
@@ -56,16 +56,23 @@ public class FishReel : MonoBehaviour
 
     private void StartReelCooldown()
     {
+        Debug.Log("Cooldown starting");
         reelCooldownTimer = reelCooldown;
         isReelingCooldown = true;
     }
 
     private void ReelFish()
     {
-        Debug.Log("Fish Starting Reel");
+        if (isFishing || isReelingCooldown){
+            Debug.Log("This is an error and should never come up");
+            return;
+        }
+
+        Debug.Log("Fish is being reeled");
         isFishing = true;
         GameObject target = ChooseItem();
-        if (target != null){
+        if (target != null)
+        {
             Collider2D hitboxCollider = GetComponent<Collider2D>();
             Vector3 centerOfHitbox = hitboxCollider.bounds.center;
             Fish targetFish = target.GetComponent<Fish>();
@@ -74,7 +81,7 @@ public class FishReel : MonoBehaviour
         }
     }
 
-    public void MoveFishTowardsLocation(GameObject target, Vector3 targetPosition, float moveSpeed)
+    private void MoveFishTowardsLocation(GameObject target, Vector3 targetPosition, float moveSpeed)
     {
         Fish targetFish = target.GetComponent<Fish>();
         targetFish.setIsCaught(true);
@@ -83,15 +90,24 @@ public class FishReel : MonoBehaviour
 
     private IEnumerator<YieldInstruction> MoveTowardsCoroutine(GameObject target, Vector3 targetPosition, float moveSpeed)
     {
+        Vector3 lastPosition = target.transform.position + new Vector3(1f, 1f, 1f);
+        
         while (Vector3.Distance(target.transform.position, targetPosition) > 0.2f)
         {
             Vector3 direction = (targetPosition - target.transform.position).normalized;
             target.transform.position += direction * moveSpeed * Time.deltaTime;
-            yield return null;
+            if (Vector3.Distance(target.transform.position, targetPosition) > Vector3.Distance(lastPosition, targetPosition))
+            {
+                break;
+            }
+
+            lastPosition = target.transform.position;
+            yield return null;   
         }
+
+        Debug.Log("fishy caught");
         target.transform.position = targetPosition;
         StartReelCooldown();
-        Debug.Log("Finish reeling fish, cooldown started"); 
         Destroy(target);
     }
 
@@ -107,17 +123,14 @@ public class FishReel : MonoBehaviour
             reelCooldownTimer -= Time.deltaTime;
             if (reelCooldownTimer <= 0.0f)
             {
-                Debug.Log("Finish cooling down, ready to reel another fish");
+                Debug.Log("Cooldown up");
+                isReelingCooldown = false;
+                isFishing = false;
+
                 if (objectsInside.Count > 0)
                 {
                     ReelFish();
                 } 
-
-                else 
-                {
-                    isReelingCooldown = false;
-                    isFishing = false;
-                }
             }
         }
     }
