@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8324029136333852287}
   - component: {fileID: 6697367216122459572}
   - component: {fileID: 2648989496440077855}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: fish
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -122,6 +122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
+  weight: 0
 --- !u!61 &6697367216122459572
 BoxCollider2D:
   m_ObjectHideFlags: 0

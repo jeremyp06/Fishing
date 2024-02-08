@@ -5,7 +5,7 @@ public class CashSystem : MonoBehaviour
 {
     public static CashSystem instance; //singleton
 
-    private int cash = 200; 
+    private int cash = 400; 
 
     public int Cash => cash;
 
@@ -21,6 +21,11 @@ public class CashSystem : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    void Start()
+    {
+        UpdateUI();
     }
 
     public void AddCash(int amount)

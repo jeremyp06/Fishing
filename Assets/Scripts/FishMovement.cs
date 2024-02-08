@@ -8,7 +8,7 @@ public class Fish : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
     private float adjustedMoveSpeed;
-    public bool isCaught = false; //change back
+    private bool isCaught = false;
 
     void Start()
     {
@@ -29,7 +29,11 @@ public class Fish : MonoBehaviour
     public void setIsCaught(bool c)
     {
         isCaught = c;
-        Debug.Log("Fish is frozen");
+    }
+
+    public bool getIsCaught()
+    {
+        return isCaught;
     }
 
     void Update()

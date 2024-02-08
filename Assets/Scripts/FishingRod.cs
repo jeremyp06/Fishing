@@ -9,8 +9,8 @@ public class FishReel : MonoBehaviour
     public float reelSpeed = 1f;
     public float reelCooldown = 3.0f;
     private float reelCooldownTimer = 0.0f;
-    public bool isReelingCooldown = false; //change back
-    public bool isFishing = false; //change back
+    private bool isReelingCooldown = false; 
+    private bool isFishing = false; 
 
     public void SetChooseItemStrategy(IFishingStrategy s)
     {
@@ -56,7 +56,6 @@ public class FishReel : MonoBehaviour
 
     private void StartReelCooldown()
     {
-        Debug.Log("Cooldown starting");
         reelCooldownTimer = reelCooldown;
         isReelingCooldown = true;
     }
@@ -64,21 +63,29 @@ public class FishReel : MonoBehaviour
     private void ReelFish()
     {
         if (isFishing || isReelingCooldown){
-            Debug.Log("This is an error and should never come up");
             return;
         }
 
-        Debug.Log("Fish is being reeled");
-        isFishing = true;
         GameObject target = ChooseItem();
-        if (target != null)
-        {
-            Collider2D hitboxCollider = GetComponent<Collider2D>();
-            Vector3 centerOfHitbox = hitboxCollider.bounds.center;
-            Fish targetFish = target.GetComponent<Fish>();
 
-            MoveFishTowardsLocation(target, centerOfHitbox, reelSpeed);
+        if (target == null)
+        {
+            return;
         }
+
+        Fish targetFish = target.GetComponent<Fish>();
+
+
+        if (targetFish.getIsCaught())
+        {
+            return;
+        }
+        
+        isFishing = true;
+        Collider2D hitboxCollider = GetComponent<Collider2D>();
+        Vector3 centerOfHitbox = hitboxCollider.bounds.center;
+
+        MoveFishTowardsLocation(target, centerOfHitbox, reelSpeed);
     }
 
     private void MoveFishTowardsLocation(GameObject target, Vector3 targetPosition, float moveSpeed)
@@ -105,7 +112,6 @@ public class FishReel : MonoBehaviour
             yield return null;   
         }
 
-        Debug.Log("fishy caught");
         target.transform.position = targetPosition;
         StartReelCooldown();
         Destroy(target);
@@ -123,7 +129,6 @@ public class FishReel : MonoBehaviour
             reelCooldownTimer -= Time.deltaTime;
             if (reelCooldownTimer <= 0.0f)
             {
-                Debug.Log("Cooldown up");
                 isReelingCooldown = false;
                 isFishing = false;
 
