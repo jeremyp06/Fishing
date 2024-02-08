@@ -73,6 +73,7 @@ public class FishReel : MonoBehaviour
             return;
         }
 
+        //picks the fish based on the strategy we chose
         GameObject target = ChooseItem();
 
         if (target == null)
@@ -88,6 +89,7 @@ public class FishReel : MonoBehaviour
             return;
         }
         
+        //reels the fish in towards the rod
         isFishing = true;
         Collider2D hitboxCollider = GetComponent<Collider2D>();
         Vector3 centerOfHitbox = hitboxCollider.bounds.center;

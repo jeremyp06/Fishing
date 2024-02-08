@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 public interface IFishingStrategy
 {
+    //abstract interface for strategy pattern
     GameObject ChooseItem(List<GameObject> objectsInside);
 }
 
@@ -10,6 +11,7 @@ public class First : IFishingStrategy
 {
     public GameObject ChooseItem(List<GameObject> objectsInside)
     {
+        //picks the first item that entered its sight radius
         if (objectsInside.Count > 0)
         {
             return objectsInside[0];
@@ -20,6 +22,8 @@ public class First : IFishingStrategy
 
 public class Last : IFishingStrategy
 {
+
+    //picks the last item that entered its sight radius
     public GameObject ChooseItem(List<GameObject> objectsInside)
     {
         if (objectsInside.Count > 0)
@@ -46,6 +50,7 @@ public class Close : IFishingStrategy
         GameObject closestObject = null;
         float minDistance = float.MaxValue;
 
+        //finds the closest object to the center of the hitbox and picks that
         foreach (GameObject obj in objectsInside)
         {
             Vector2 objPosition = obj.transform.position;
@@ -68,6 +73,7 @@ public class Strong : IFishingStrategy
         GameObject strongestFish = null;
         float maxWeight = float.MinValue;
 
+        //picks the fish with the highest weight stat
         foreach (GameObject fishObject in objectsInside)
         {
             Fish fish = fishObject.GetComponent<Fish>();

@@ -62,10 +62,7 @@ public static class FishFactory
 {
     public static GameObject CreateFish(GameObject prefab, Vector3 spawnPosition)
     {
-        // Generate a random y-coordinate within the range of -2 to 2
         float randomY = Random.Range(-2f, 2f);
-
-        // Set the spawn position with the random y-coordinate
         Vector3 position = new Vector3(spawnPosition.x, randomY, spawnPosition.z);
 
         // Instantiate fish object and return it
